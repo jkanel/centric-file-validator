@@ -1,0 +1,73 @@
+﻿<?xml version="1.0"?>
+<file
+  label="Purchase Order Transaction"
+  skip-rows="0"
+  column-delimiter="\t"
+  ignore-empty-rows="true"
+  trim-spaces="true"
+  compress-whitespace="true">
+
+  <row label="Purchase Order Header" disposition-column-label="ROWTYPE" disposition-column-value="PO_HEADER">
+    
+    <!-- identifier column -->
+    <column label="ROWTYPE" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+    
+    <!-- grain columns -->
+    <column label="PO_HEADER_UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+    
+    <!-- attribute columns -->
+    <column label="SUPPLIER_UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+    
+    <column label="ORDER_DATE" data-type="DATE" required="true"/>
+    <column label="REQUEST_DATE" data-type="DATE" required="true"/>
+    <column label="FREIGHT" data-type="DECIMAL" required="false"/>
+    <column label="ITEM_COUNT" data-type="INTEGER" required="true"/>
+    
+    <column label="SHIP_TO_ADDRESS_LINE_1" data-type="TEXT" max-length="10" truncate="true" />
+    <column label="SHIP_TO_ADDRESS_LINE_2" data-type="TEXT" max-length="200" />
+    
+    <!--
+    <column label="SHIP_TO_CITY" data-type="TEXT" max-length="200" truncate="true" />
+    <column label="SHIP_TO_STATE_PROVINCE_CODE" data-type="TEXT" max-length="2" />
+    <column label="SHIP_TO_STATE_PROVINCE_DESC" data-type="TEXT" max-length="100" />
+    <column label="SHIP_TO_STATE_COUNTRY_CODE" data-type="TEXT" max-length="2"/>
+    <column label="SHIP_TO_STATE_COUNTRY_DESC" data-type="TEXT" max-length="100"/>
+    <column label="SHIP_TO_POSTAL_CODE" data-type="TEXT" max-length="20"/>
+    -->
+    
+    <column label="MODIFIED_DTM" data-type="TIMESTAMP" required="true"/>
+
+
+  </row>
+  
+  <row label="Purchase Order Detail" disposition-column-label="ROWTYPE" disposition-column-value="PO_DETAIL">
+
+    <!-- identifier column -->
+    <column label="ROWTYPE" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+    
+    <!-- grain columns -->
+    <column label="PO_HEADER_UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+    <column label="PO_DEAIL_UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+    <column label="SHIP_DATE" data-type="DATE" required="false"/>
+    
+    <column label="SHIP_STATUS" data-type="TEXT" restrict-values="true">
+      <value>ORDERED</value>
+      <value>IN-PROGRESS</value>
+      <value>SHIPPED</value>
+      <value>CANCELLED</value>
+    </column>
+    
+    <!-- attribute columns -->
+    <!--
+    <column label="ITEM_UID" data-type="TEXT" max-length="200" truncate="false" />
+    <column label="INVOICE_UID" data-type="DATE"/>
+    <column label="INVOICE_NUMBER" data-type="TEXT" required="false"/>
+    
+    <column label="TRANSACTION_COST" data-type="DECIMAL" required="true"/>
+    <column label="TRANSACTION_AMOUNT" data-type="DECIMAL" required="true"/>
+    -->
+
+  </row>
+
+
+</file>

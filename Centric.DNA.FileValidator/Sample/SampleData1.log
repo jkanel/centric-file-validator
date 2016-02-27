@@ -1,0 +1,25 @@
+INFORMATION - File "SampleData1.txt"
+INFORMATION - File "SampleData1.txt" - 31 data rows were disposed in this file.
+INFORMATION - File "SampleData1.txt" - 10 critical errors were identified in this file.
+
+INFORMATION - Row 1 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
+CRITICAL - Row 1 - Column #5 [REQUEST_DATE] value of "20/20/2015" does not meet the expected DATE format.
+
+CRITICAL - Row 2 - Disposition could not be determined
+
+INFORMATION - Row 3 - Disposition [Purchase Order Detail][ROWTYPE]="PO_DETAIL".
+CRITICAL - Row 3 - Contains too many values: 10 value(s) were provided, 5 were expected.
+CRITICAL - Row 3 - Column #5 [SHIP_STATUS] value of "1/8/2015" is not in the list of allowable values.
+
+INFORMATION - Row 10 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
+CRITICAL - Row 10 - Column #5 [REQUEST_DATE] value of "2/20/2015 12:35:16PM" is a TIMESTAMP but not a DATE.
+
+INFORMATION - Row 11 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
+CRITICAL - Row 11 - Column #10 [MODIFIED_DTM] value of "2/20/2014" is a DATE but not a TIMESTAMP.
+
+INFORMATION - Row 14 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
+CRITICAL - Row 14 - Contains too few values: 9 value(s) were provided, 10 were expected.
+CRITICAL - Row 14 - Missing values for the following columns: MODIFIED_DTM.
+CRITICAL - Row 14 - Column #7 [ITEM_COUNT] value of "12.9" is does not meet the expected INTEGER format.
+
+CRITICAL - Row 37 - Disposition could not be determined
