@@ -1,5 +1,0 @@
-C:\Working\Visual Studio 2013\Projects\Centric File Validator\Centric.DNA.FileValidator\bin\Debug\Centric.DNA.File.dll
-C:\Working\Visual Studio 2013\Projects\Centric File Validator\Centric.DNA.FileValidator\bin\Debug\Centric.DNA.File.pdb
-C:\Working\Visual Studio 2013\Projects\Centric File Validator\Centric.DNA.FileValidator\obj\Debug\Centric.DNA.File.dll
-C:\Working\Visual Studio 2013\Projects\Centric File Validator\Centric.DNA.FileValidator\obj\Debug\Centric.DNA.File.pdb
-C:\Working\Visual Studio 2013\Projects\Centric File Validator\Centric.DNA.FileValidator\obj\Debug\Centric.DNA.File.csprojResolveAssemblyReference.cache
