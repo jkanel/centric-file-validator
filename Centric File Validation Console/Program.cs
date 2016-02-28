@@ -14,12 +14,12 @@ namespace Centric.DNA.File.Test
         static void Main(string[] args)
         {
 
-          string BasePath = @"C:\Working\Visual Studio 2013\Projects\Centric File Validator\Centric.DNA.FileValidator\Sample";
+          string BasePath = @"C:\Working\GitHub\centric-file-validator\Centric.DNA.FileValidator\Sample";
 
           Centric.DNA.File.File f = new File(BasePath + @"\" + "SampleData1.txt");
           f.FileDefinition = FileDefinitionLoader.LoadFromXmlFile(BasePath + @"\" + "SampleFileDefinition.xml");
 
-          f.Validate(20);
+          f.Validate(10);
 
           Console.WriteLine(f.GenerateArchiveFileName());
 

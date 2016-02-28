@@ -39,12 +39,17 @@ namespace Centric.DNA.File
         /// <summary>
         /// Validate the File against the internal FileDefinition.
         /// </summary>
-        public void Validate(int CriticalErrorCountAbortLimit)
+        /// <param name="AbortLimit">Limit of critical errors allowed before aborting validation.</param>
+        public void Validate(int AbortLimit)
         {
 
             // informational file validation error
           this.ValidationErrors.Add(
-            new ValidationError(string.Format("File \"{0}\"", this.FileName()), ValidationErrorScope.Information)
+            new ValidationError(string.Format("File Name: \"{0}\"", this.FileName()), ValidationErrorSeverity.Information)
+          );
+
+          this.ValidationErrors.Add(
+            new ValidationError(string.Format("File Hash: {0}", this.FileHash()), ValidationErrorSeverity.Information)
           );
 
           //loop through file rows
@@ -67,8 +72,8 @@ namespace Centric.DNA.File
                   if(RowText == null || RowText.Trim().Length == 0)
                   {
                         this.ValidationErrors.Add(
-                          new ValidationError(RowPosition,
-                              string.Format("Row {0} - Contains no data.", RowPosition), ValidationErrorScope.Warning));
+                          new ValidationError(RowPosition, "Not Applicable",
+                              string.Format("The row contains no data."), ValidationErrorSeverity.Warning));
 
                         // go to the next row
                         continue;
@@ -82,8 +87,8 @@ namespace Centric.DNA.File
                   if(rd == null)
                   {
                       this.ValidationErrors.Add(
-                          new ValidationError(RowPosition,
-                              string.Format("Row {0} - Disposition could not be determined", RowPosition)));
+                          new ValidationError(RowPosition, "Undetermined",
+                              string.Format("The row disposition could not be determined")));
 
                   } else 
                   {
@@ -91,7 +96,8 @@ namespace Centric.DNA.File
                       rd.Validate(RowValues, RowPosition, this.ValidationErrors);
                   }
 
-                  if(ValidationError.CriticalErrorCount(this.ValidationErrors) >= CriticalErrorCountAbortLimit)
+                  // break out of validation if abort limit is hit
+                  if (AbortLimit > 0 && ValidationError.CriticalErrorCount(this.ValidationErrors) >= AbortLimit)
                   {
                     break;
                   }
@@ -99,16 +105,18 @@ namespace Centric.DNA.File
 
           }
 
+          // report the count of data rows (with disposition)
           if(DataRowCount == 0)
           {         
               this.ValidationErrors.Add(new ValidationError(
-                string.Format("File \"{0}\" - No data rows were presented in this file.", this.FileName())
+                string.Format("No data rows were presented in this file.")
                 ));
+
           } else
           {
 
             this.ValidationErrors.Add(new ValidationError(
-              string.Format("File \"{0}\" - {1} data rows were disposed in this file.", this.FileName(), DataRowCount), ValidationErrorScope.Information
+              string.Format("{0} data row(s) have disposition in this file.", DataRowCount), ValidationErrorSeverity.Information
               ));
           
           }
@@ -116,18 +124,18 @@ namespace Centric.DNA.File
           // report the number of validation errors
           int CriticalErrorCount = ValidationError.CriticalErrorCount(this.ValidationErrors);
 
-            this.ValidationErrors.Add(new ValidationError(
-              string.Format("File \"{0}\" - {1} critical errors were identified in this file.", this.FileName(), CriticalErrorCount), ValidationErrorScope.Information
-              ));
+          this.ValidationErrors.Add(new ValidationError(
+            string.Format("{0} critical errors were identified in this file.", CriticalErrorCount), ValidationErrorSeverity.Information
+            ));
 
 
           // report if the abort limit was reached
-          if(CriticalErrorCount >= CriticalErrorCountAbortLimit)
+            if (CriticalErrorCount > 0 && CriticalErrorCount >= AbortLimit)
           {
             
             this.ValidationErrors.Add(new ValidationError(
-              string.Format("File \"{0}\" - Validation was aborted after {1} critical errors.", 
-                this.FileName(), (CriticalErrorCount>CriticalErrorCountAbortLimit)?CriticalErrorCount:CriticalErrorCountAbortLimit), ValidationErrorScope.Information
+              string.Format("Validation was halted after {0} critical errors.", 
+                (CriticalErrorCount>AbortLimit)?CriticalErrorCount:AbortLimit), ValidationErrorSeverity.Information
               ));
 
           }
@@ -137,7 +145,7 @@ namespace Centric.DNA.File
         /// <summary>
         /// File name component of the file specified in the FilePath.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns the file name with a path.</returns>
         public string FileName()
         {
             return System.IO.Path.GetFileName(this.FilePath);
@@ -178,6 +186,7 @@ namespace Centric.DNA.File
         public DateTime CreateTimestamp()
         {
             return System.IO.File.GetCreationTime(this.FilePath);
+
         }
 
 
@@ -192,11 +201,11 @@ namespace Centric.DNA.File
             SHA256Managed sha = new SHA256Managed();
             byte[] hash = sha.ComputeHash(fs);
 
-            return BitConverter.ToString(hash).ToUpper();
+            return BitConverter.ToString(hash).Replace("-",String.Empty);
         }
 
         /// <summary>
-        /// Archive file name of the file specified in the FilePath made unqiue through incorporation of the file hash. 
+        /// Unique file name comprised the original file name and the file hash. 
         /// </summary>
         /// <returns></returns>
         public string GenerateArchiveFileName()

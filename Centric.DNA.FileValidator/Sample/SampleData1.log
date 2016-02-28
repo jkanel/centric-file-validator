@@ -1,25 +1,47 @@
-INFORMATION - File "SampleData1.txt"
-INFORMATION - File "SampleData1.txt" - 31 data rows were disposed in this file.
-INFORMATION - File "SampleData1.txt" - 10 critical errors were identified in this file.
+FILE - File Name: "SampleData1.txt"
+FILE - File Hash: 2515240680CAC9E2EE8A4B3B1281B4D4376B9D6E064FF78AD4FDA6346ACBA866
+FILE - 31 data row(s) have disposition in this file.
+FILE - 10 critical errors were identified in this file.
+FILE - Validation was halted after 10 critical errors.
 
-INFORMATION - Row 1 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
-CRITICAL - Row 1 - Column #5 [REQUEST_DATE] value of "20/20/2015" does not meet the expected DATE format.
+ROW #1 - DISPOSITION: [Purchase Order Header][ROWTYPE]="PO_HEADER"
+>> COLUMN #5 [REQUEST_DATE] - Value of "20/20/2015" does not meet the expected DATE format.
 
-CRITICAL - Row 2 - Disposition could not be determined
+ROW #2 - DISPOSITION: Undetermined
+>> The row disposition could not be determined
 
-INFORMATION - Row 3 - Disposition [Purchase Order Detail][ROWTYPE]="PO_DETAIL".
-CRITICAL - Row 3 - Contains too many values: 10 value(s) were provided, 5 were expected.
-CRITICAL - Row 3 - Column #5 [SHIP_STATUS] value of "1/8/2015" is not in the list of allowable values.
+ROW #3 - DISPOSITION: [Purchase Order Detail][ROWTYPE]="PO_DETAIL"
+>> Contains too many values: 10 value(s) were provided, 5 were expected.
 
-INFORMATION - Row 10 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
-CRITICAL - Row 10 - Column #5 [REQUEST_DATE] value of "2/20/2015 12:35:16PM" is a TIMESTAMP but not a DATE.
+ROW #3 - DISPOSITION: [Purchase Order Detail][ROWTYPE]="PO_DETAIL"
+>> COLUMN #5 [SHIP_STATUS] - Value of "1/8/2015" is not in the list of allowable values.
 
-INFORMATION - Row 11 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
-CRITICAL - Row 11 - Column #10 [MODIFIED_DTM] value of "2/20/2014" is a DATE but not a TIMESTAMP.
+ROW #10 - DISPOSITION: [Purchase Order Header][ROWTYPE]="PO_HEADER"
+>> COLUMN #5 [REQUEST_DATE] - Value of "2/20/2015 12:35:16PM" is a TIMESTAMP but not a DATE.
 
-INFORMATION - Row 14 - Disposition [Purchase Order Header][ROWTYPE]="PO_HEADER".
-CRITICAL - Row 14 - Contains too few values: 9 value(s) were provided, 10 were expected.
-CRITICAL - Row 14 - Missing values for the following columns: MODIFIED_DTM.
-CRITICAL - Row 14 - Column #7 [ITEM_COUNT] value of "12.9" is does not meet the expected INTEGER format.
+ROW #11 - DISPOSITION: [Purchase Order Header][ROWTYPE]="PO_HEADER"
+>> COLUMN #10 [MODIFIED_DTM] - Value of "2/20/2014" is a DATE but not a TIMESTAMP.
 
-CRITICAL - Row 37 - Disposition could not be determined
+ROW #14 - DISPOSITION: [Purchase Order Header][ROWTYPE]="PO_HEADER"
+>> Contains too few values: 9 value(s) were provided, 10 were expected.
+
+ROW #14 - DISPOSITION: [Purchase Order Header][ROWTYPE]="PO_HEADER"
+>> Missing values for the following columns: MODIFIED_DTM.
+
+ROW #14 - DISPOSITION: [Purchase Order Header][ROWTYPE]="PO_HEADER"
+>> COLUMN #7 [ITEM_COUNT] - Value of "12.9" is does not meet the expected INTEGER format.
+
+ROW #33 - DISPOSITION: Not Applicable
+>> The row contains no data.
+
+ROW #34 - DISPOSITION: Not Applicable
+>> The row contains no data.
+
+ROW #35 - DISPOSITION: Not Applicable
+>> The row contains no data.
+
+ROW #36 - DISPOSITION: Not Applicable
+>> The row contains no data.
+
+ROW #37 - DISPOSITION: Undetermined
+>> The row disposition could not be determined

@@ -24,14 +24,15 @@ namespace Centric.DNA.File
             this.RowDefinition = RowDefinition;
         }
 
+
         public void Validate(string RowValue, int RowPosition, List<ValidationError> ValidationErrors)
         {
 
           // test for required but missing values
           if(this.Required && (RowValue == null || RowValue.Length == 0))
           {
-              ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                  string.Format("Row {0} - Column #{1} [{2}] was required but did not present a value.", 
+              ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                  string.Format("Column is required but the row did not present a value.", 
                     RowPosition, this.Position, this.Label)
                   ));
 
@@ -46,9 +47,9 @@ namespace Centric.DNA.File
                   if(!this.Truncate && this.MaxLength > 0 && RowValue.Length > this.MaxLength)
                   {
                       // non-critical error
-                      ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                          string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" exceeds maximum length of {4} and will not be truncated.",
-                            RowPosition, this.Position, this.Label, RowValue.Substring(0,this.MaxLength), this.MaxLength)
+                    ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                          string.Format("Value of \"{0}\" exceeds maximum length of {1} and will not be truncated.",
+                            RowValue.Substring(0,this.MaxLength), this.MaxLength)
                           ));
                   }
                   break;
@@ -60,9 +61,8 @@ namespace Centric.DNA.File
                   if(decimal.TryParse(RowValue, out d)==false)
                   {
 
-                      ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                          string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" is does not meet the expected DECIMAL format.",
-                          RowPosition, this.Label, this.Position, RowValue, this.RowDefinition.RowDisposition())
+                    ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                          string.Format("Value of \"{0}\" is does not meet the expected DECIMAL format.", RowValue)
                           ));
 
                   }
@@ -76,9 +76,8 @@ namespace Centric.DNA.File
                   if (DateTime.TryParse(RowValue, out dt) == false)
                   {
 
-                      ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                          string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" does not meet the expected DATE format.",
-                            RowPosition, this.Position, this.Label, RowValue)
+                    ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                          string.Format("Value of \"{0}\" does not meet the expected DATE format.", RowValue)
                           ));
 
                   } else
@@ -86,9 +85,8 @@ namespace Centric.DNA.File
                     if (DateTime.TryParse(RowValue + " 23:23:59", out dt) == false)
                     {
 
-                      ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                          string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" is a TIMESTAMP but not a DATE.",
-                            RowPosition, this.Position, this.Label, RowValue)
+                      ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                          string.Format("Value of \"{0}\" is a TIMESTAMP but not a DATE.", RowValue)
                           ));
 
                     }
@@ -103,9 +101,8 @@ namespace Centric.DNA.File
                   if (DateTime.TryParse(RowValue, out ts) == false)
                   {
 
-                      ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                          string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" does not meet the expected TIMESTAMP format.",
-                            RowPosition, this.Position, this.Label, RowValue)
+                    ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                          string.Format("Value of \"{0}\" does not meet the expected TIMESTAMP format.", RowValue)
                           ));
 
 
@@ -114,9 +111,8 @@ namespace Centric.DNA.File
                       if (DateTime.TryParse(RowValue + " 23:23:59", out ts) == true)
                   {
 
-                          ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                              string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" is a DATE but not a TIMESTAMP.",
-                                RowPosition, this.Position, this.Label, RowValue)
+                    ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                              string.Format("Value of \"{0}\" is a DATE but not a TIMESTAMP.", RowValue)
                               ));
 
                   }
@@ -130,9 +126,8 @@ namespace Centric.DNA.File
                   if (int.TryParse(RowValue, out i) == false)
                   {
 
-                      ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                          string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" is does not meet the expected INTEGER format.",
-                             RowPosition, this.Position, this.Label, RowValue)
+                    ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                          string.Format("Value of \"{0}\" is does not meet the expected INTEGER format.", RowValue)
                           ));
 
                   }
@@ -144,9 +139,8 @@ namespace Centric.DNA.File
 
               if(this.DomainValues.Count > 0 && !this.DomainValues.Contains(RowValue))
               {
-                  ValidationErrors.Add(new ValidationError(RowPosition, this.Position, this.Label,
-                      string.Format("Row {0} - Column #{1} [{2}] value of \"{3}\" is not in the list of allowable values.",
-                         RowPosition, this.Position, this.Label, RowValue)
+                ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDisposition, this.Position, this.Label,
+                      string.Format("Value of \"{0}\" is not in the list of allowable values.", RowValue)
                       ));
               }
           }

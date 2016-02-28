@@ -22,9 +22,11 @@ namespace Centric.DNA.File
             this.FileDefinition = FileDefinition;
         }
 
-        public string RowDisposition()
+        public string RowDisposition
         {
-            return string.Format("[{0}][{1}]=\"{2}\"", this.Label, this.DispositionColumnLabel, this.DispositionColumnValue);
+          get{
+              return string.Format("[{0}][{1}]=\"{2}\"", this.Label, this.DispositionColumnLabel, this.DispositionColumnValue);
+          }
         }
 
         public int DispositionColumnPosition
@@ -71,32 +73,24 @@ namespace Centric.DNA.File
 
         public void Validate(string[] RowValues, int RowPosition, List<ValidationError> ValidationErrors)
         {
-
-          // create informational validation error
-          ValidationError rve = new ValidationError(RowPosition,
-                   string.Format("Row {0} - Disposition {1}.",
-                   RowPosition, this.RowDisposition()), ValidationErrorScope.Information);
-          
-          rve.ColumnPosition = -1;
-          ValidationErrors.Add(rve);
-
+         
           // check values and column counts
            if(RowValues.Length > this.ColumnDefinitions.Count)
            {
-               ValidationErrors.Add(new ValidationError(RowPosition,
-                   string.Format("Row {0} - Contains too many values: {1} value(s) were provided, {2} were expected.",
-                   RowPosition, RowValues.Length, this.ColumnDefinitions.Count)));
+             ValidationErrors.Add(new ValidationError(RowPosition, this.RowDisposition,
+                   string.Format("Contains too many values: {0} value(s) were provided, {1} were expected.",
+                     RowValues.Length, this.ColumnDefinitions.Count)));
 
            } else if (RowValues.Length < this.ColumnDefinitions.Count)
            {
 
-               ValidationErrors.Add(new ValidationError(RowPosition,
-                   string.Format("Row {0} - Contains too few values: {1} value(s) were provided, {2} were expected.",
-                   RowPosition, RowValues.Length, this.ColumnDefinitions.Count)));
+             ValidationErrors.Add(new ValidationError(RowPosition, this.RowDisposition,
+                   string.Format("Contains too few values: {0} value(s) were provided, {1} were expected.",
+                     RowValues.Length, this.ColumnDefinitions.Count)));
 
-               ValidationErrors.Add(new ValidationError(RowPosition,
-                   string.Format("Row {0} - Missing values for the following columns: {1}.",
-                   RowPosition, ColumnDefinition.ColumnLabelsPostPosition(this.ColumnDefinitions, RowValues.Length))));
+             ValidationErrors.Add(new ValidationError(RowPosition, this.RowDisposition,
+                   string.Format("Missing values for the following columns: {0}.",
+                    ColumnDefinition.ColumnLabelsPostPosition(this.ColumnDefinitions, RowValues.Length))));
 
            }
 
