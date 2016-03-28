@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Centric.DNA.FileValidator")]
-[assembly: AssemblyDescription("Centric File Validator")]
+[assembly: AssemblyTitle("Centric File Validator")]
+[assembly: AssemblyDescription("Centric Data & Analytics File Validator")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Centric Consulting")]
 [assembly: AssemblyProduct("Centric.DNA.FileValidator")]
