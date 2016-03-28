@@ -58,6 +58,7 @@ namespace Centric.DNA.File.Definition
             fd.CompressWhitespace = bool.Parse(AttributeValue(FileNode, "compress-whitespace", "false"));
             fd.IgnoreEmptyRows = bool.Parse(AttributeValue(FileNode, "ignore-empty-rows", "true"));
             fd.TrimSpaces = bool.Parse(AttributeValue(FileNode, "trim-spaces", "true"));
+            fd.TrimSpaces = bool.Parse(AttributeValue(FileNode, "strip-quotes", "true"));
             fd.SkipRows = int.Parse(AttributeValue(FileNode, "skip-rows", "0"));
 
             foreach(XmlNode RowNode in FileNode.SelectNodes("row"))

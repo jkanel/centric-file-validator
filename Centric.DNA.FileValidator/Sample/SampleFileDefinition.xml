@@ -5,7 +5,8 @@
   column-delimiter="\t"
   ignore-empty-rows="true"
   trim-spaces="true"
-  compress-whitespace="true">
+  compress-whitespace="true"
+  strip-quotes ="true">
 
   <row label="Purchase Order Header" disposition-column-label="ROWTYPE" disposition-column-value="PO_HEADER">
     
