@@ -260,9 +260,9 @@ namespace Centric.DNA.File
         /// </summary>
         /// <param name="TrunkFolderPath">The folder path below which the the folders comprise the branch.</param>
         /// <returns>Branch folder path below the trunk folder path and excluding the file name.</returns>
-        public string BranchFolder(string TrunkFolderPath)
+        public string FolderBranch(string TrunkFolderPath)
         {
-          return File.GetBranchFolder(this.FilePath, TrunkFolderPath);
+          return File.GetFolderBranch(this.FilePath, TrunkFolderPath);
         }
 
 
@@ -272,7 +272,7 @@ namespace Centric.DNA.File
         /// <param name="FilePath">The file who branch in the trunk folder path is being determined.</param>  
         /// <param name="TrunkFolderPath">The folder path below which the the folders comprise the branch.</param>
         /// <returns>Branch folder path below the trunk folder path and excluding the file name.</returns>/// 
-        public static string GetBranchFolder(string FilePath, string TrunkFolderPath)
+        public static string GetFolderBranch(string FilePath, string TrunkFolderPath)
         {
           // determine the file folder path
           string QualifiedFileFolderPath = System.IO.Path.GetDirectoryName(FilePath); 
@@ -309,16 +309,16 @@ namespace Centric.DNA.File
           } else
           {
             
-            string DerivedBranchFolder = QualifiedFileFolderPath.Substring(QualifiedTrunkFolderPath.Length);
+            string DerivedFolderBranch = QualifiedFileFolderPath.Substring(QualifiedTrunkFolderPath.Length);
 
             // determine if the first character is a folder delimiter
-            if (DerivedBranchFolder.IndexOf("\\") == 0)
+            if (DerivedFolderBranch.IndexOf("\\") == 0)
             {
               // strip the first character
-              DerivedBranchFolder = DerivedBranchFolder.Substring(1);
+              DerivedFolderBranch = DerivedFolderBranch.Substring(1);
             }
 
-            return DerivedBranchFolder;
+            return DerivedFolderBranch;
 
           }
         }

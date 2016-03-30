@@ -23,7 +23,7 @@ namespace Centric.DNA.File.Test
 
           Console.WriteLine(f.ArchiveFileName);
           Console.WriteLine(f.ArchiveFilePath(@"C:\Temp"));
-          Console.WriteLine(f.BranchFolder(@"C:\Working\GitHub\centric-file-validator\Centric.DNA.FileValidator"));
+          Console.WriteLine(f.FolderBranch(@"C:\Working\GitHub\centric-file-validator\Centric.DNA.FileValidator"));
 
 
           bool ContainsCriticalErrors = ValidationError.ContainsCriticalErrors(f.ValidationErrors);
