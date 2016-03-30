@@ -203,6 +203,17 @@ namespace Centric.DNA.File
           }
         }
 
+        /// <summary>
+        /// Date and time at which the file was last modified.
+        /// </summary>
+        /// <returns></returns>
+        public DateTime LastModifiedTimestamp
+        {
+          get
+          {
+            return System.IO.File.GetLastWriteTime(this.FilePath);
+          }
+        }
 
         /// <summary>
         /// 256-bit (64 character) hash of the file specified in the FilePath.
