@@ -8,7 +8,7 @@
   compress-whitespace="true"
   strip-quotes ="true">
 
-  <row label="Purchase Order Header" disposition-column-label="ROWTYPE" disposition-column-value="PO_HEADER">
+  <row label="Purchase Order Header" disposition-column="ROWTYPE" disposition-column-value="PO_HEADER">
     
     <!-- identifier column -->
     <column label="ROWTYPE" data-type="TEXT" max-length="200" truncate="false" required="true"/>
@@ -41,7 +41,7 @@
 
   </row>
   
-  <row label="Purchase Order Detail" disposition-column-label="ROWTYPE" disposition-column-value="PO_DETAIL">
+  <row label="Purchase Order Detail" disposition-column="ROWTYPE" disposition-column-value="PO_DETAIL">
 
     <!-- identifier column -->
     <column label="ROWTYPE" data-type="TEXT" max-length="200" truncate="false" required="true"/>
@@ -51,13 +51,8 @@
     <column label="PO_DEAIL_UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
     <column label="SHIP_DATE" data-type="DATE" required="false"/>
     
-    <column label="SHIP_STATUS" data-type="TEXT" restrict-values="true">
-      <value>ORDERED</value>
-      <value>IN-PROGRESS</value>
-      <value>SHIPPED</value>
-      <value>CANCELLED</value>
-    </column>
-    
+    <column label="SHIP_STATUS" data-type="TEXT" regex-pattern="^[A-Z]{0,20}$" domain-list="PO Status" required="false" />
+
     <!-- attribute columns -->
     <!--
     <column label="ITEM_UID" data-type="TEXT" max-length="200" truncate="false" />
@@ -70,5 +65,27 @@
 
   </row>
 
+  <domain-list label="PO Status">
+    
+    <item value="ORDERED">
+      <label>Ordered</label>
+      <description></description>
+    </item>
 
+    <item value="CANCELLED">
+      <label>Cancelled</label>
+      <description></description>
+    </item>
+
+    <item value="IN-PROGRESS">
+      <label>In-Progress</label>
+      <description></description>
+    </item>
+
+    <item value="SHIPPED">
+      <label>Shipped</label>
+      <description></description>
+    </item>
+
+  </domain-list>
 </file>

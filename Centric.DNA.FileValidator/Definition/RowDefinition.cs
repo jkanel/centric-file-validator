@@ -18,14 +18,22 @@ namespace Centric.DNA.File
         public FileDefinition FileDefinition;
 
         public RowDefinition(FileDefinition FileDefinition)
-        {
+        { 
             this.FileDefinition = FileDefinition;
         }
 
         public string RowDisposition
         {
           get{
-              return string.Format("[{0}][{1}]=\"{2}\"", this.Label, this.DispositionColumnLabel, this.DispositionColumnValue);
+              return this.DispositionColumnValue;
+          }
+        }
+
+        public string RowDispositionPhrase
+        {
+          get
+          {
+            return string.Format("[{0}]=\"{1}\"", this.DispositionColumnLabel, this.DispositionColumnValue);
           }
         }
 
@@ -65,7 +73,7 @@ namespace Centric.DNA.File
           {
             return RowValues[this.DispositionColumnPosition - 1].Equals(this.DispositionColumnValue);
           }
-          catch (Exception e)
+          catch
           {
             return false;
           }
@@ -73,26 +81,10 @@ namespace Centric.DNA.File
 
         public void Validate(string[] RowValues, int RowPosition, List<ValidationError> ValidationErrors)
         {
-         
-          // check values and column counts
-           if(RowValues.Length > this.ColumnDefinitions.Count)
-           {
-             ValidationErrors.Add(new ValidationError(RowPosition, this.RowDisposition,
-                   string.Format("Contains too many values: {0} value(s) were provided, {1} were expected.",
-                     RowValues.Length, this.ColumnDefinitions.Count)));
 
-           } else if (RowValues.Length < this.ColumnDefinitions.Count)
-           {
+          int RowValueCount = RowValues.Length;
 
-             ValidationErrors.Add(new ValidationError(RowPosition, this.RowDisposition,
-                   string.Format("Contains too few values: {0} value(s) were provided, {1} were expected.",
-                     RowValues.Length, this.ColumnDefinitions.Count)));
-
-             ValidationErrors.Add(new ValidationError(RowPosition, this.RowDisposition,
-                   string.Format("Missing values for the following columns: {0}.",
-                    ColumnDefinition.ColumnLabelsPostPosition(this.ColumnDefinitions, RowValues.Length))));
-
-           }
+          ValidateRowValueCount(RowValueCount, RowPosition, ValidationErrors);
 
            ColumnDefinition cd = null;
 
@@ -107,9 +99,32 @@ namespace Centric.DNA.File
 
            }
 
+        }
 
+      protected void ValidateRowValueCount(int RowValueCount, int RowPosition, List<ValidationError> ValidationErrors)
+      {
+
+        // check values and column counts
+        if (RowValueCount > this.ColumnDefinitions.Count)
+        {
+          ValidationErrors.Add(new ValidationError(RowPosition, this.RowDispositionPhrase,
+                string.Format("Contains too many values: {0} value(s) were provided, {1} were expected.",
+                  RowValueCount, this.ColumnDefinitions.Count)));
 
         }
+        else if (RowValueCount < this.ColumnDefinitions.Count)
+        {
+
+          ValidationErrors.Add(new ValidationError(RowPosition, this.RowDispositionPhrase,
+                string.Format("Contains too few values: {0} value(s) were provided, {1} were expected.",
+                  RowValueCount, this.ColumnDefinitions.Count)));
+
+          ValidationErrors.Add(new ValidationError(RowPosition, this.RowDispositionPhrase,
+                string.Format("Missing values for the following columns: {0}.",
+                 ColumnDefinition.ColumnLabelsPostPosition(this.ColumnDefinitions, RowValueCount))));
+
+        }
+      }
         
     }
 }

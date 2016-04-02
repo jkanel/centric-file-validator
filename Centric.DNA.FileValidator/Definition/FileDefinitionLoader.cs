@@ -74,9 +74,9 @@ namespace Centric.DNA.File.Definition
         {
             rd.Label = AttributeValue(RowNode, "label");
 
-            rd.DispositionColumnLabel = AttributeValue(RowNode, "disposition-column-label");
+            rd.DispositionColumnLabel = AttributeValue(RowNode, "disposition-column");
             rd.DispositionColumnValue = AttributeValue(RowNode, "disposition-column-value");
-
+            
             int ColumnPosition = 0;
 
             foreach (XmlNode ColumnNode in RowNode.SelectNodes("column"))
@@ -101,14 +101,28 @@ namespace Centric.DNA.File.Definition
             cd.Required = bool.Parse(AttributeValue(ColumnNode, "required", "false"));
             cd.Truncate = bool.Parse(AttributeValue(ColumnNode, "truncate", "false"));
             cd.MaxLength = int.Parse(AttributeValue(ColumnNode, "max-length", "0"));
+            cd.RegexPattern = AttributeValue(ColumnNode, "regex-pattern");
+
+            cd.DomainList = AttributeValue(ColumnNode, "domain-list");
+           
 
             // add domain values
-            foreach(XmlNode dv in ColumnNode.SelectNodes("value"))
+            if(cd.DomainList!=null)
             {
-              if (dv.InnerText != null && dv.InnerText.Trim().Length > 0)
-                {
-                  cd.DomainValues.Add(dv.InnerText.Trim());
-                }
+
+              string DomainListXpath = "file/domain-list[@label=\"" + cd.DomainList + "\"]/item[@value]";
+              string DomainValue = null;
+
+              foreach (XmlNode dv in ColumnNode.OwnerDocument.SelectNodes(DomainListXpath))
+              {
+
+                DomainValue = AttributeValue(dv, "value");
+
+                if (DomainValue != null && DomainValue.Length > 0)
+                  {
+                    cd.DomainValues.Add(DomainValue);
+                  }
+              }
             }
 
         }

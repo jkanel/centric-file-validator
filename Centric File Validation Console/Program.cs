@@ -16,10 +16,15 @@ namespace Centric.DNA.File.Test
 
           string BasePath = @"C:\Working\GitHub\centric-file-validator\Centric.DNA.FileValidator\Sample";
 
-          Centric.DNA.File.File f = new File(BasePath + @"\" + "SampleData1.txt");
-          f.FileDefinition = FileDefinitionLoader.LoadFromXmlFile(BasePath + @"\" + "SampleFileDefinition.xml");
+          Centric.DNA.File.File f = new File(BasePath + @"\" + "rpm_test.txt");
+          f.FileDefinition = FileDefinitionLoader.LoadFromXmlFile(BasePath + @"\" + "rpm.xml");
 
-          f.Validate(10);
+          File.RowValidationFunction rvf = RowValidation;
+       
+          f.Validate(100, rvf);
+
+          //File.EmitRowFunction emr = EmitRow;
+          //f.IterateEmitRow(EmitRow);
 
           Console.WriteLine(f.ArchiveFileName);
           Console.WriteLine(f.ArchiveFilePath(@"C:\Temp"));
@@ -30,9 +35,16 @@ namespace Centric.DNA.File.Test
 
           if (ContainsCriticalErrors)
           {
-            ValidationError.ExportToFile(f.ValidationErrors, BasePath + @"\" + "SampleData1.log");
+            ValidationError.ExportToFile(f.ValidationErrors, BasePath + @"\" + "sample.log");
+            ValidationError.ExportToTabFile(f.ValidationErrors, BasePath + @"\" + "sample_tab.txt");
           }
 
+        }
+
+        public static void RowValidation(int RowPosition, string RowText, bool IsBlank, string RowDisposition)
+        {
+          Console.WriteLine(RowDisposition);
+          Console.WriteLine(RowText);
         }
     }
 }

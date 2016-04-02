@@ -1,0 +1,230 @@
+﻿<?xml version="1.0"?>
+<file
+  label="Purchase Order Transaction"
+  skip-rows="0"
+  column-delimiter="|"
+  ignore-empty-rows="true"
+  trim-spaces="true"
+  compress-whitespace="true">
+
+
+	<row label="Material" disposition-column="Row Type" disposition-column-value="MAT.1.0">
+
+		<!-- identifier column -->
+		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+
+		<!-- grain columns -->
+		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Source Revision Timestamp" data-type="DATETIME" truncate="false" required="true"/>
+		<column label="Source Revision Actor" data-type="TEXT" max-length="100" truncate="false" required="true"/>
+		<column label="Material Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Material Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Material UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<!-- attribute columns -->
+
+		<column label="Vendor Material Number" data-type="TEXT" max-length="100" truncate="false" required="false"/>
+		<column label="Material Number" data-type="TEXT" max-length="100" truncate="false" required="true"/>
+		<column label="Material Description" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Vendor Source Code" domain-list="Source" data-type="TEXT" max-length="100" truncate="false" required="true"/>
+		<column label="Vendor UID" data-type="TEXT" max-length="100" truncate="false" required="true"/>
+		<column label="Material Subcategory Code" data-type="TEXT" max-length="100" truncate="false" required="true"/>
+
+
+	</row>
+
+
+	<row label="Location" disposition-column="Row Type" disposition-column-value="LOC.1.0">
+
+		<!-- identifier column -->
+		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+
+		<!-- grain columns -->
+		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Source Revision Timestamp" data-type="DATETIME" truncate="false" required="true"/>
+		<column label="Source Revision Actor" data-type="TEXT" max-length="100" truncate="false" required="true"/>
+		<column label="Location Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Location Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Location UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<!-- attribute columns -->
+		<column label="Location Description" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Company Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Country Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Location Type Code" data-type="TEXT" domain-list="Location Type" />
+	</row>
+
+
+	<row label="Vendor" disposition-column="Row Type" disposition-column-value="VND.1.0">
+
+		<!-- identifier column -->
+		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+
+		<!-- grain columns -->
+		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Source Revision Timestamp" data-type="DATETIME" required="true"/>
+		<column label="Source Revision Actor" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Vendor Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Vendor Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Vendor UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+	
+		<!-- attribute columns -->
+		<column label="Vendor Number" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Vendor Name" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Vendor Type Code" data-type="TEXT" max-length="20" />
+		<column label="Vendor Family" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Standard Payment Terms" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+	</row>
+
+
+	<row label="Purchase Order Header" disposition-column="Row Type" disposition-column-value="POH.1.0">
+
+		<!-- identifier column -->
+		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+
+		<!-- grain columns -->
+		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Source Revision Timestamp" data-type="DATETIME" required="true"/>
+		<column label="Source Revision Actor" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="PO Header Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="PO Header Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PO Header UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<!-- attribute columns -->
+		<column label="PO Number" data-type="TEXT" max-length="200" truncate="false" required="false"/>
+		<column label="Vendor Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Vendor UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<column label="Purchasing Company Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Order Date" data-type="DATE"  required="true"/>
+		<column label="Payment Terms" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<column label="Freight Terms" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Ship To Location Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Ship To Location UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PO Status Code" data-type="TEXT" max-length="20" />
+
+	</row>
+
+
+	<row label="Purchase Order Line" disposition-column="Row Type" disposition-column-value="POL.1.0">
+
+		<!-- identifier column -->
+		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+
+		<!-- grain columns -->
+		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Source Revision Timestamp" data-type="DATETIME" required="true"/>
+		<column label="Source Revision Actor" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="PO Line Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="PO Line Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="PO Line UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<!-- attribute columns -->
+		<column label="PO Header Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PO Header UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PO Line Number" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PO Line Type Code" data-type="TEXT" max-length="20" />
+		<column label="Material Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Material UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Shipper Description" data-type="TEXT" max-length="200" truncate="false" required="false"/>
+		<column label="PO Line Description" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Request Date" data-type="DATE" max-length="200" truncate="false" required="false"/>
+		<column label="Receipt Date" data-type="DATE" max-length="200" truncate="false" required="false"/>
+		<column label="Package Description" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Per-Package Price" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Unit Description" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Per-Unit Price" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Order Unit Quantity" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Received Unit Quantity" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Purchase Currency Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Material Payment" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Freight Payment" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Other Payment" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Discount Amount" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+
+	</row>
+
+
+	<row label="Purchasing Reconciliation" disposition-column="Row Type" disposition-column-value="PRC.1.0">
+
+		<!-- identifier column -->
+		<column label="Row Type" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<!-- grain columns -->
+		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Source Revision Timestamp" data-type="DATETIME" max-length="200" truncate="false" required="true"/>
+		<column label="Source Revision Actor" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PR Delete Flag" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PR Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<column label="Purchase Company Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		
+		<!-- attribute columns -->
+		<column label="Purchase Currency Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Order Calendar Year" data-type="INTEGER"  regex-pattern="^[2][0-9]{3}$" required="true" />
+		<column label="Order Calendar Month of Year" data-type="INTEGER" required="true" />
+
+		<column label="Material Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Material UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<column label="PO Line Count" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Material Payment" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Freight Payment" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Discount Amount" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+		<column label="Received Unit Quantity" data-type="DECIMAL" max-length="200" truncate="false" required="true"/>
+
+	</row>
+
+	<domain-list label="Source">
+		<item value="FLC-BA1">
+			<description>Flowcrete Baan (US)</description>
+		</item>
+		<item value="FLC-BA2">
+			<description>Flowcrete Baan (Europe)</description>
+		</item>
+		<item value="RST-JDE">
+			<description>Rustoleum JD Edwards (Europe)</description>
+		</item>
+		<item value="RST-SAP">
+			<description>Rustoleum (SAP)</description>
+		</item>
+		<item value="STH-BUS">
+			<description>Stonhard Baan (US)</description>
+		</item>
+		<item value="WDF-AD1">
+			<description>Wood Finishes Adage (US)</description>
+		</item>
+		<item value="WDF-AD2">
+			<description>Wood Finishes Adage (Europe) (</description>
+		</item>
+	</domain-list>
+
+	<domain-list label="Company">
+		<item value="FLC">
+			<description>Flowcrete</description>
+		</item>
+		<item value="RST">
+			<description>Rustoleum</description>
+		</item>
+		<item value="STH">
+			<description>Stonhard</description>
+		</item>
+		<item value="WDF">
+			<description>Wood Finishes</description>
+		</item>
+	</domain-list>
+
+
+	<domain-list label="Location Type">
+		<item value="PLT">
+			<description>Plant</description>
+		</item>
+		<item value="TLR">
+			<description>Toller</description>
+		</item>
+	</domain-list>
+
+</file>

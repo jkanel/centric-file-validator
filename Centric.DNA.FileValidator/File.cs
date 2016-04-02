@@ -14,16 +14,20 @@ namespace Centric.DNA.File
         public String FilePath;
         public FileDefinition FileDefinition;
         public List<ValidationError> ValidationErrors = new List<ValidationError>();
-        public string ArchiveFileExtension = "txt";
+        private string _FileGuid = null;
+      
+        public delegate void RowValidationFunction(int RowPosition, string RowText, bool ContainsData, int RowErrorCount, string RowDisposition);
+
+        public File() : this(null, new FileDefinition())
+        {
+        }
 
         /// <summary>
         /// File class constructor.
         /// </summary>
         /// <param name="FilePath">Full path of the file.</param>
-        public File(String FilePath)
+        public File(String FilePath) : this(FilePath, new FileDefinition())
         {
-            this.FilePath = FilePath;
-            this.FileDefinition = new FileDefinition();
         }
 
         /// <summary>
@@ -35,6 +39,10 @@ namespace Centric.DNA.File
         {
             this.FilePath = FilePath;
             this.FileDefinition = FileDefinition;
+
+            this._FileGuid = Guid.NewGuid().ToString().Replace("-", String.Empty).ToUpper();
+
+            
         }
 
         /// <summary>
@@ -43,70 +51,108 @@ namespace Centric.DNA.File
         /// <param name="AbortLimit">Limit of critical errors allowed before aborting validation.</param>
         public void Validate(int AbortLimit)
         {
+           Validate(AbortLimit, null);
+        }
 
-            // informational file validation error
-          this.ValidationErrors.Add(
-            new ValidationError(string.Format("File Name: \"{0}\"", this.FileName), ValidationErrorSeverity.Information)
-          );
+        /// <summary>
+        /// Validate the File against the internal FileDefinition.
+        /// </summary>
+        /// <param name="AbortLimit">Limit of critical errors allowed before aborting validation.</param>
+        public void Validate(int AbortLimit, RowValidationFunction rvf)
+        {
 
-          this.ValidationErrors.Add(
-            new ValidationError(string.Format("File Hash: {0}", this.FileHash), ValidationErrorSeverity.Information)
-          );
-
-          //loop through file rows
           StreamReader sr = new StreamReader(this.FilePath);
+
+          this.ValidationErrors.Add(new ValidationError(string.Format("File Name: {0}", this.FileName), ValidationErrorSeverity.Information));
+          this.ValidationErrors.Add(new ValidationError(string.Format("File Hash: {0}", this.FileHash), ValidationErrorSeverity.Information));
 
           int RowPosition = 0;
           string[] RowValues = null;
           string RowText;
           int DataRowCount = 0;
-            
-          while(!sr.EndOfStream)
+
+          while((RowText = sr.ReadLine()) != null)
           {
               RowPosition++;
 
-              if (RowPosition > this.FileDefinition.SkipRows)
+              // got the next row if directed to skip row
+              if (RowPosition <= this.FileDefinition.SkipRows)
               {
+                continue;
+              }
+          
                     
-                  RowText = sr.ReadLine();
-                    
-                  if(RowText == null || RowText.Trim().Length == 0)
-                  {
-                        this.ValidationErrors.Add(
-                          new ValidationError(RowPosition, "Not Applicable",
-                              string.Format("The row contains no data."), ValidationErrorSeverity.Warning));
+              // consider if the row has now values
+              if(RowText == null || RowText.Trim().Length == 0)
+              {
+                if(this.FileDefinition.IgnoreEmptyRows == true)
+                { 
+                  this.ValidationErrors.Add(new ValidationError(RowPosition, null,
+                    string.Format("Row {0} contains no data.", RowPosition), ValidationErrorSeverity.Warning));
+                }
+                else
+                {
+                  this.ValidationErrors.Add(new ValidationError(RowPosition, null,
+                    string.Format("Row {0} contains no data.", RowPosition), ValidationErrorSeverity.Critical));
+                }
 
-                        // go to the next row
-                        continue;
+                // raise the event
+                if (rvf != null)
+                {
+                  rvf(RowPosition, RowText, false, this.FileDefinition.IgnoreEmptyRows?0:1, null);
+                }
+
+
+                // go to the next row
+                continue;
+              }
+              
+              // convert row text to string array
+              RowValues = this.FileDefinition.ConvertRowToValues(RowText);
+
+              // determine the applicable row definition
+              RowDefinition rd = this.FileDefinition.FindRowDefinition(RowValues);
+
+              if(rd == null)
+              {
+                  this.ValidationErrors.Add(
+                      new ValidationError(RowPosition, "Undetermined",
+                          string.Format("The row disposition could not be determined")));
+
+                  // raise the event
+                  if (rvf != null)
+                  {
+                    rvf(RowPosition, RowText, true, 1, null);
                   }
 
-                  RowValues = this.FileDefinition.ConvertRowToValues(RowText);
 
-                  // determine the applicable row definition
-                  RowDefinition rd = this.FileDefinition.FindRowDefinition(RowValues);
+              } else 
+              {
+                
+                // this row has data
+                DataRowCount++;
+                rd.Validate(RowValues, RowPosition, this.ValidationErrors);
 
-                  if(rd == null)
-                  {
-                      this.ValidationErrors.Add(
-                          new ValidationError(RowPosition, "Undetermined",
-                              string.Format("The row disposition could not be determined")));
+                // raise the event
+                if (rvf != null)
+                {
+                  rvf(RowPosition, RowText, true, ValidationError.CriticalErrorCount(this.ValidationErrors, RowPosition), rd.DispositionColumnValue);
+                }
 
-                  } else 
-                  {
-                      DataRowCount++;
-                      rd.Validate(RowValues, RowPosition, this.ValidationErrors);
-                  }
-
-                  // break out of validation if abort limit is hit
-                  if (AbortLimit > 0 && ValidationError.CriticalErrorCount(this.ValidationErrors) >= AbortLimit)
-                  {
-                    break;
-                  }
               }
 
+              // break out of validation if abort limit is hit
+              if (AbortLimit > 0 && ValidationError.CriticalErrorCount(this.ValidationErrors) >= AbortLimit)
+              {
+                break;
+              }
           }
+          
+          // close the stream reader
+          sr.Close();
 
           // report the count of data rows (with disposition)
+          // ADDITIONAL VALIDATION
           if(DataRowCount == 0)
           {         
               this.ValidationErrors.Add(new ValidationError(
@@ -123,6 +169,7 @@ namespace Centric.DNA.File
           }
 
           // report the number of validation errors
+          // ADDITIONAL VALIDATION
           int CriticalErrorCount = ValidationError.CriticalErrorCount(this.ValidationErrors);
 
           this.ValidationErrors.Add(new ValidationError(
@@ -131,6 +178,7 @@ namespace Centric.DNA.File
 
 
           // report if the abort limit was reached
+          // ADDITIONAL VALIDATION
             if (CriticalErrorCount > 0 && CriticalErrorCount >= AbortLimit)
           {
             
@@ -142,7 +190,8 @@ namespace Centric.DNA.File
           }
           
         }
-        
+
+
         /// <summary>
         /// File name component of the file specified in the FilePath.
         /// </summary>
@@ -152,7 +201,20 @@ namespace Centric.DNA.File
           get {
             return System.IO.Path.GetFileName(this.FilePath);
           }
-        }        
+        }
+
+        /// <summary>
+        /// File name component of the file specified in the FilePath.
+        /// </summary>
+        /// <returns>Returns the file name with a path.</returns>
+        public string FileGuid
+        {
+          get
+          {
+            return this._FileGuid;
+          }
+        } 
+   
 
         /// <summary>
         /// Directory component of the file specified in the FilePath.
@@ -222,10 +284,14 @@ namespace Centric.DNA.File
         public string FileHash
         {
           get {
+
             FileStream fs = System.IO.File.OpenRead(this.FilePath);
 
-            SHA256Managed sha = new SHA256Managed();
-            byte[] hash = sha.ComputeHash(fs);
+            MD5 md5hasher = MD5.Create();
+            byte[] hash = md5hasher.ComputeHash(fs);
+
+            md5hasher.Clear();
+            fs.Close();
 
             return BitConverter.ToString(hash).Replace("-",String.Empty);
           }
@@ -240,7 +306,7 @@ namespace Centric.DNA.File
           get
           {
             return String.Concat(
-                new string[] { this.FileNameWithoutExtension, "_", this.FileHash, ".", this.ArchiveFileExtension });
+                new string[] { this.FileNameWithoutExtension, "_", this._FileGuid, this.FileExtension });
           }
         }
 
@@ -251,7 +317,7 @@ namespace Centric.DNA.File
         /// <returns>Fully qualified archive file path.</returns>
         public string ArchiveFilePath(string ArchiveFolderPath)
         {
-          return System.IO.Path.Combine(ArchiveFolderPath, this.ArchiveFileName);
+           return File.GetFilePath(ArchiveFolderPath, this.ArchiveFileName);
         }
 
 
@@ -265,6 +331,10 @@ namespace Centric.DNA.File
           return File.GetFolderBranch(this.FilePath, TrunkFolderPath);
         }
 
+        public static string GetFilePath(string FolderPath, string FileName)
+        {
+          return System.IO.Path.Combine(FolderPath, FileName);
+        }
 
         /// <summary>
         /// Determines the branch (section of the folder path) within the trunk folder path and excluding the file name.

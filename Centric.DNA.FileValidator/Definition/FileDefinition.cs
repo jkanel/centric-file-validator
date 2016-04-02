@@ -81,5 +81,18 @@ namespace Centric.DNA.File
             return (RowDefinition)null;
         }
 
+        public string FindDispositionValue(string[] Values)
+        {
+          foreach (RowDefinition rd in this.RowDefinitions)
+          {
+            if (rd.MatchesRowDisposition(Values) == true)
+            {
+              return rd.DispositionColumnValue;
+            }
+          }
+
+          return (string)null;
+        }
+
     }
 }

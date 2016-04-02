@@ -1,0 +1,22 @@
+RowPosition	ColumnPosition	RowDisposition	ColumnLabel	SeverityName	ScopeName	Message
+0	0			Information	File	File Name: rpm_test.txt
+0	0			Information	File	File Hash: 38489F1616CEC9237419C91544BD84F0
+0	0			Information	File	9 data row(s) have disposition in this file.
+0	0			Information	File	17 critical errors were identified in this file.
+1	6	[Row Type]="VND.1.0"	Vendor Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+2	6	[Row Type]="VND.1.0"	Vendor Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+3	6	[Row Type]="LOC.1.0"	Location Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+4	6	[Row Type]="LOC.1.0"	Location Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+5	6	[Row Type]="MAT.1.0"	Material Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+5	11	[Row Type]="MAT.1.0"	Vendor Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+6	6	[Row Type]="MAT.1.0"	Material Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+6	11	[Row Type]="MAT.1.0"	Vendor Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+7	6	[Row Type]="POH.1.0"	PO Header Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+7	9	[Row Type]="POH.1.0"	Vendor Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+7	15	[Row Type]="POH.1.0"	Ship To Location Source Code	Critical	Column	Value of "QWERTY" is not in the list of allowable values.
+8	6	[Row Type]="POL.1.0"	PO Line Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+8	8	[Row Type]="POL.1.0"	PO Header Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+8	12	[Row Type]="POL.1.0"	Material Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+9	6	[Row Type]="POL.1.0"	PO Line Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+9	8	[Row Type]="POL.1.0"	PO Header Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+9	12	[Row Type]="POL.1.0"	Material Source Code	Critical	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.

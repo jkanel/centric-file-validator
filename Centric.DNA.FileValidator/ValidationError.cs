@@ -119,10 +119,125 @@ namespace Centric.DNA.File
         /// Returns the description of the error severity enumaration value.
         /// </summary>
         /// <returns></returns>
-        public string SeverityName()
+        public string SeverityName
         {
-          return Enum.GetName(this.Severity.GetType(), this.Severity).ToUpper();
+          get
+          {
+            return Enum.GetName(this.Severity.GetType(), this.Severity);
+          }
         }
+
+        /// <summary>
+        /// Returns the description of the error severity enumaration value.
+        /// </summary>
+        /// <returns></returns>
+        public string ScopeName
+        {
+          get{
+            return Enum.GetName(this.Scope.GetType(), this.Scope);
+          }
+        }
+
+
+        /// <summary>
+        /// Determines the number of errors having a critical severity.
+        /// </summary>
+        /// <param name="ValidationErrors">List of ValidationErrors.</param>
+        /// <returns>Number of errors having a critical severity.</returns>
+        public static int CriticalErrorCount(List<ValidationError> ValidationErrors)
+        {
+          return ValidationErrors.Count(item => item.Severity == ValidationErrorSeverity.Critical);
+        }
+
+
+        /// <summary>
+        /// Determines the number of errors having a critical severity.
+        /// </summary>
+        /// <param name="ValidationErrors">List of ValidationErrors.</param>
+        /// <returns>Number of errors having a critical severity.</returns>
+        public static int CriticalErrorCount(List<ValidationError> ValidationErrors, int RowPosition)
+        {
+          return ValidationErrors.Count(item => item.Severity == ValidationErrorSeverity.Critical && item.RowPosition == RowPosition);
+        }
+
+        /// <summary>
+        /// Indicates whether the errors contain at least one critical error.
+        /// </summary>
+        /// <param name="ValidationErrors">List of ValidationErrors.</param>
+        /// <returns>Returns true if there are any critical severity errors in the list of ValidationErrors.</returns>
+        public static bool ContainsCriticalErrors(List<ValidationError> ValidationErrors)
+        {
+          return ValidationErrors.Exists(item => item.Severity == ValidationErrorSeverity.Critical);
+        }
+
+        public static bool ContainsCriticalErrors(List<ValidationError> ValidationErrors, int RowPosition)
+        {
+          return ValidationErrors.Exists(item => item.Severity == ValidationErrorSeverity.Critical && item.RowPosition == RowPosition);
+        }
+
+        public static List<ValidationError> SortedValidationErrors(List<ValidationError> ValidationErrors)
+        {
+          return ValidationErrors
+            .OrderBy(e => e.RowPosition)
+            .ThenBy(e => e.ColumnPosition)
+            .ToList<ValidationError>();
+        }
+
+
+        public string[] ToStringArray()
+        {
+
+          string[] Values = new string[]
+         {
+           this.RowPosition.ToString()
+         , this.ColumnPosition.ToString()
+         , this.RowDisposition
+         , this.ColumnLabel
+         , this.SeverityName
+         , this.ScopeName
+         , this.Message
+         };
+
+          return Values;
+
+        }
+
+
+        public static void ExportToTabFile(List<ValidationError> ValidationErrors, string ExportFilePath)
+        {
+          ExportToDataFile(ValidationErrors, ExportFilePath, "\t");
+        }
+
+        public static void ExportToDataFile(List<ValidationError> ValidationErrors, string ExportFilePath, string ColumnDelimiter)
+        {
+
+          StreamWriter sw = new StreamWriter(ExportFilePath);
+
+          // always show the file Validation Errors regardless of scope
+          List<ValidationError> VEList = ValidationError.SortedValidationErrors(ValidationErrors);
+
+          string[] RowHeaderValues = new string[]
+          {
+            "RowPosition"
+          , "ColumnPosition"
+          , "RowDisposition"
+          , "ColumnLabel"
+          , "SeverityName"
+          , "ScopeName"
+          , "Message"
+          };
+
+          sw.WriteLine(String.Join(ColumnDelimiter, RowHeaderValues));
+
+          foreach (ValidationError ve in VEList)
+          {
+            sw.WriteLine(String.Join(ColumnDelimiter, ve.ToStringArray()));
+          }
+
+          sw.Close();
+
+        }
+
 
         /// <summary>
         /// String representation of the error.
@@ -142,7 +257,6 @@ namespace Centric.DNA.File
 
             case ValidationErrorScope.Row:
 
-              sb.AppendLine(String.Empty);
               sb.AppendLine(string.Format("ROW #{0} - DISPOSITION: {1}", this.RowPosition, this.RowDisposition));
               sb.AppendLine(string.Format(">> {0}", this.Message));
 
@@ -150,7 +264,7 @@ namespace Centric.DNA.File
 
             case ValidationErrorScope.Column:
 
-              sb.AppendLine(String.Empty);
+
               sb.AppendLine(string.Format("ROW #{0} - DISPOSITION: {1}", this.RowPosition, this.RowDisposition));
               sb.AppendLine(string.Format(">> COLUMN #{0} [{1}] - {2}", this.ColumnPosition, this.ColumnLabel, this.Message));
               
@@ -162,51 +276,32 @@ namespace Centric.DNA.File
         }
 
         /// <summary>
-        /// Determines the number of errors having a critical severity.
-        /// </summary>
-        /// <param name="ValidationErrors">List of ValidationErrors.</param>
-        /// <returns>Number of errors having a critical severity.</returns>
-        public static int CriticalErrorCount(List<ValidationError> ValidationErrors)
-        {
-          return ValidationErrors.Count(item => item.Severity == ValidationErrorSeverity.Critical);
-        }
-
-        /// <summary>
-        /// Indicates whether the errors contain at least one critical error.
-        /// </summary>
-        /// <param name="ValidationErrors">List of ValidationErrors.</param>
-        /// <returns>Returns true if there are any critical severity errors in the list of ValidationErrors.</returns>
-        public static bool ContainsCriticalErrors(List<ValidationError> ValidationErrors)
-        {
-          return ValidationErrors.Exists(item => item.Severity == ValidationErrorSeverity.Critical);
-        }
-
-
-        /// <summary>
         /// Generates a file summary of the validation errors.
         /// </summary>
         /// <param name="ValidationErrors">List of ValidationErrors.</param>
         /// <param name="ExportFilePath">Fully qualified path of the export file.</param>
         public static void ExportToFile(List<ValidationError> ValidationErrors, string ExportFilePath)
         {
-        
+
           StreamWriter sw = new StreamWriter(ExportFilePath);
 
           // always show the file Validation Errors regardless of scope
-          List<ValidationError> VEList = ValidationErrors
-            .OrderBy(e => e.RowPosition)
-            .ThenBy(e => e.ColumnPosition)
-            .ToList<ValidationError>();
+          List<ValidationError> VEList = ValidationError.SortedValidationErrors(ValidationErrors);
 
           foreach (ValidationError ve in VEList)
           {
-            sw.Write(ve.ToString());
+            
+            if (ve.Scope == ValidationErrorScope.Row)
+            {
+              sw.WriteLine(String.Empty);
+            }
+
+            sw.WriteLine(ve.ToString());
           }
 
           sw.Close();
 
         }
-
 
         /// <summary>
         /// Generates a string summary of the validation errors.
@@ -217,15 +312,18 @@ namespace Centric.DNA.File
         {
           StringBuilder sb = new StringBuilder();
 
-          List<ValidationError> VEList = ValidationErrors
-            .OrderBy(e => e.RowPosition)
-            .ThenBy(e => e.ColumnPosition)
-            .ToList<ValidationError>();
+          List<ValidationError> VEList = ValidationError.SortedValidationErrors(ValidationErrors);
+
 
           foreach (ValidationError ve in VEList)
           {
 
-            sb.Append(ve.ToString());
+            if(ve.Scope == ValidationErrorScope.Row)
+            {
+              sb.AppendLine(String.Empty);
+            }
+
+            sb.AppendLine(ve.ToString());
           }
 
           return sb.ToString();
