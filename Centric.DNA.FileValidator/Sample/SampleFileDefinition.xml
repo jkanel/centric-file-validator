@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <file
   label="Purchase Order Transaction"
   skip-rows="0"
@@ -6,7 +6,7 @@
   ignore-empty-rows="true"
   trim-spaces="true"
   compress-whitespace="true"
-  strip-quotes ="true">
+  strip-quotes="true">
 
   <row label="Purchase Order Header" disposition-column="ROWTYPE" disposition-column-value="PO_HEADER">
     

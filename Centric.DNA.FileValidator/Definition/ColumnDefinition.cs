@@ -31,15 +31,22 @@ namespace Centric.DNA.File
         public void Validate(string RowValue, int RowPosition, List<ValidationError> ValidationErrors)
         {
 
-          // test for required but missing values
-          if(this.Required && (RowValue == null || RowValue.Length == 0))
+          // test for missing values
+          if (RowValue == null || RowValue.Length == 0)
           {
+
+            // if the value is required add a validation error
+            if (this.Required)
+            {
               ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDispositionPhrase, this.Position, this.Label,
-                  string.Format("Column is required but the row did not present a value.", 
+                  string.Format("Column is required but the row did not present a value.",
                     RowPosition, this.Position, this.Label)
                   ));
 
-              return;
+            }
+
+            // do not proceed with validation of missing values.
+            return;
 
           }
 

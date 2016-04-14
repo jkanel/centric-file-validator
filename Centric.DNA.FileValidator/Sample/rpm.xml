@@ -7,6 +7,36 @@
   trim-spaces="true"
   compress-whitespace="true">
 
+	<row label="Purchase Order Header" disposition-column="Row Type" disposition-column-value="POH.1.0">
+
+		<!-- identifier column -->
+		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+
+		<!-- grain columns -->
+		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Source Revision Timestamp" data-type="DATETIME" required="true"/>
+		<column label="Source Revision Actor" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="PO Header Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="PO Header Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PO Header UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<!-- attribute columns -->
+		<column label="PO Number" data-type="TEXT" max-length="200" truncate="false" required="false"/>
+		<column label="Vendor Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Vendor UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<column label="Purchasing Company Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Order Date" data-type="DATE"  required="false"/>
+		<column label="Payment Terms" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+
+		<column label="Freight Terms" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Ship To Location Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="Ship To Location UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
+		<column label="PO Status Code" data-type="TEXT" max-length="20" />
+
+	</row>
+
+
 
 	<row label="Material" disposition-column="Row Type" disposition-column-value="MAT.1.0">
 
@@ -77,35 +107,6 @@
 
 	</row>
 
-
-	<row label="Purchase Order Header" disposition-column="Row Type" disposition-column-value="POH.1.0">
-
-		<!-- identifier column -->
-		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
-
-		<!-- grain columns -->
-		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
-		<column label="Source Revision Timestamp" data-type="DATETIME" required="true"/>
-		<column label="Source Revision Actor" data-type="TEXT" max-length="20" truncate="false" required="true"/>
-		<column label="PO Header Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>
-		<column label="PO Header Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-		<column label="PO Header UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-
-		<!-- attribute columns -->
-		<column label="PO Number" data-type="TEXT" max-length="200" truncate="false" required="false"/>
-		<column label="Vendor Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-		<column label="Vendor UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-
-		<column label="Purchasing Company Code" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-		<column label="Order Date" data-type="DATE"  required="true"/>
-		<column label="Payment Terms" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-
-		<column label="Freight Terms" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-		<column label="Ship To Location Source Code" domain-list="Source" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-		<column label="Ship To Location UID" data-type="TEXT" max-length="200" truncate="false" required="true"/>
-		<column label="PO Status Code" data-type="TEXT" max-length="20" />
-
-	</row>
 
 
 	<row label="Purchase Order Line" disposition-column="Row Type" disposition-column-value="POL.1.0">

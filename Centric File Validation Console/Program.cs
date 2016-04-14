@@ -41,7 +41,7 @@ namespace Centric.DNA.File.Test
 
         }
 
-        public static void RowValidation(int RowPosition, string RowText, bool IsBlank, string RowDisposition)
+        public static void RowValidation(int RowPosition, string RowText, bool ContainsData, int RowErrorCount, string RowDisposition)
         {
           Console.WriteLine(RowDisposition);
           Console.WriteLine(RowText);
