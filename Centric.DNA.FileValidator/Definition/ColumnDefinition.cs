@@ -17,6 +17,7 @@ namespace Centric.DNA.File
         public int Position;
         public string RegexPattern;
         public string DomainList;
+        public bool DomainCompliant;
 
         public List<String> DomainValues = new List<string>();
 
@@ -96,9 +97,19 @@ namespace Centric.DNA.File
         {
           if (this.DomainList != null && !this.DomainValues.Contains(RowValue))
           {
-            ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDispositionPhrase, this.Position, this.Label,
+
+            if(this.DomainCompliant)
+            {
+              ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDispositionPhrase, this.Position, this.Label,
               string.Format("Value of \"{0}\" is not in the list of allowable values.", RowValue)
               ));
+            }
+            else
+            {
+              ValidationErrors.Add(new ValidationError(RowPosition, this.RowDefinition.RowDispositionPhrase, this.Position, this.Label,
+                string.Format("Warning. Value of \"{0}\" is not in the list of allowable values.", RowValue), ValidationErrorSeverity.Warning
+                ));
+            }
           }
         }
 

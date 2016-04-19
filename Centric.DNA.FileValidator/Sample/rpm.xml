@@ -13,7 +13,7 @@
 		<column label="Row Type" data-type="TEXT" max-length="20" truncate="false" required="true"/>
 
 		<!-- grain columns -->
-		<column label="Row Source Code" domain-list="Source" data-type="TEXT" max-length="20" truncate="false" required="true"/>
+		<column label="Row Source Code" domain-list="Source" domain-compliant="true" data-type="TEXT" max-length="20" truncate="false" required="true"/>
 		<column label="Source Revision Timestamp" data-type="DATETIME" required="true"/>
 		<column label="Source Revision Actor" data-type="TEXT" max-length="20" truncate="false" required="true"/>
 		<column label="PO Header Delete Flag" data-type="TEXT" max-length="20" truncate="false" required="true"/>

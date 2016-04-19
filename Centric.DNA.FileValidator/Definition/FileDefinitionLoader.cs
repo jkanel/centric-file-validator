@@ -123,6 +123,7 @@ namespace Centric.DNA.File.Definition
           cd.RegexPattern = AttributeValue(ColumnNode, "regex-pattern");
 
           cd.DomainList = AttributeValue(ColumnNode, "domain-list");
+          cd.DomainCompliant = bool.Parse(AttributeValue(ColumnNode, "domain-compliant", "true"));
            
 
           // add domain values

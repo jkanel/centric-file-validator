@@ -33,11 +33,17 @@ namespace Centric.DNA.File.Test
 
           bool ContainsCriticalErrors = ValidationError.ContainsCriticalErrors(f.ValidationErrors);
 
+          ValidationError.ExportToFile(f.ValidationErrors, BasePath + @"\" + "rpm.log");
+
+          /*
+           * 
           if (ContainsCriticalErrors)
           {
-            ValidationError.ExportToFile(f.ValidationErrors, BasePath + @"\" + "sample.log");
-            ValidationError.ExportToTabFile(f.ValidationErrors, BasePath + @"\" + "sample_tab.txt");
+            ValidationError.ExportToFile(f.ValidationErrors, BasePath + @"\" + "rpm.log");
+            ValidationError.ExportToTabFile(f.ValidationErrors, BasePath + @"\" + "rpm_tab.txt");
           }
+           *
+           */
 
         }
 

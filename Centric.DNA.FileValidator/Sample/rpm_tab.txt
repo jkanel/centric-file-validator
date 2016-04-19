@@ -1,0 +1,24 @@
+RowPosition	ColumnPosition	RowDisposition	ColumnLabel	SeverityName	ScopeName	Message
+0	0			Information	File	File Name: rpm_test.txt
+0	0			Information	File	File Hash: 1D1FB66B7C98ED14999956C276AC704A
+0	0			Information	File	9 data row(s) have disposition in this file.
+0	0			Information	File	1 critical errors were identified in this file.
+1	2	[Row Type]="POH.1.0"	Row Source Code	Warning	Column	Value of "FLC-BAX" is not in the list of allowable values.
+1	6	[Row Type]="POH.1.0"	PO Header Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+1	9	[Row Type]="POH.1.0"	Vendor Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+1	15	[Row Type]="POH.1.0"	Ship To Location Source Code	Warning	Column	Value of "QWERTY" is not in the list of allowable values.
+2	0	Undetermined		Critical	Row	The row disposition could not be determined
+3	6	[Row Type]="VND.1.0"	Vendor Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+4	6	[Row Type]="VND.1.0"	Vendor Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+5	6	[Row Type]="LOC.1.0"	Location Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+6	6	[Row Type]="LOC.1.0"	Location Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+7	6	[Row Type]="MAT.1.0"	Material Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+7	11	[Row Type]="MAT.1.0"	Vendor Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+8	6	[Row Type]="MAT.1.0"	Material Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+8	11	[Row Type]="MAT.1.0"	Vendor Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+9	6	[Row Type]="POL.1.0"	PO Line Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+9	8	[Row Type]="POL.1.0"	PO Header Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+9	12	[Row Type]="POL.1.0"	Material Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+10	6	[Row Type]="POL.1.0"	PO Line Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+10	8	[Row Type]="POL.1.0"	PO Header Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
+10	12	[Row Type]="POL.1.0"	Material Source Code	Warning	Column	Value of "FLOWCRETE#SAS_213" is not in the list of allowable values.
