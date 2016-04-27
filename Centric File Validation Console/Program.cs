@@ -20,6 +20,7 @@ namespace Centric.DNA.File.Test
           f.FileDefinition = FileDefinitionLoader.LoadFromXmlFile(BasePath + @"\" + "rpm.xml");
 
           File.RowValidationFunction rvf = RowValidation;
+          string Branch = f.FolderBranch(@"C:\Temp");
        
           f.Validate(100, rvf);
 
@@ -29,6 +30,7 @@ namespace Centric.DNA.File.Test
           Console.WriteLine(f.ArchiveFileName);
           Console.WriteLine(f.ArchiveFilePath(@"C:\Temp"));
           Console.WriteLine(f.FolderBranch(@"C:\Working\GitHub\centric-file-validator\Centric.DNA.FileValidator"));
+
 
 
           bool ContainsCriticalErrors = ValidationError.ContainsCriticalErrors(f.ValidationErrors);

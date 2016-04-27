@@ -365,7 +365,7 @@ namespace Centric.DNA.File
 
           if(QualifiedFileFolderPath.Equals(QualifiedTrunkFolderPath))
           {
-            return null;
+            return String.Empty;
           }
           if(QualifiedTrunkFolderPath.Length > QualifiedFileFolderPath.Length)
           {
