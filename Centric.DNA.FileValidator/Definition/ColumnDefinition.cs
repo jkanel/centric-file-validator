@@ -95,7 +95,9 @@ namespace Centric.DNA.File
 
         protected void ValidateDomain(string RowValue, int RowPosition, List<ValidationError> ValidationErrors)
         {
-          if (this.DomainList != null && !this.DomainValues.Contains(RowValue))
+
+
+          if (this.DomainList != null && !this.DomainValues.Contains(RowValue, StringComparer.OrdinalIgnoreCase))
           {
 
             if(this.DomainCompliant)
