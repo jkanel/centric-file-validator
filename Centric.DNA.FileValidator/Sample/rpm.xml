@@ -5,7 +5,8 @@
   column-delimiter="|"
   ignore-empty-rows="true"
   trim-spaces="true"
-  compress-whitespace="true">
+  compress-whitespace="true"
+  encodingX="ISO-8859-1">
 
 	<row label="Purchase Order Header" disposition-column="Row Type" disposition-column-value="POH.1.0">
 
@@ -180,7 +181,7 @@
 	</row>
 
 	<domain-list label="Source">
-		<item value="FLC-BA1">
+		<item value="fLC-BA1">
 			<description>Flowcrete Baan (US)</description>
 		</item>
 		<item value="FLC-BA2">

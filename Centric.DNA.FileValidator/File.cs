@@ -15,7 +15,7 @@ namespace Centric.DNA.File
         public FileDefinition FileDefinition;
         public List<ValidationError> ValidationErrors = new List<ValidationError>();
         private string _FileGuid = null;
-      
+        
         public delegate void RowValidationFunction(int RowPosition, string RowText, bool ContainsData, int RowErrorCount, string RowDisposition);
 
         public File() : this(null, new FileDefinition())
@@ -51,8 +51,9 @@ namespace Centric.DNA.File
         /// <param name="AbortLimit">Limit of critical errors allowed before aborting validation.</param>
         public void Validate(int AbortLimit)
         {
-           Validate(AbortLimit, null);
+          Validate(AbortLimit, null);
         }
+
 
         /// <summary>
         /// Validate the File against the internal FileDefinition.
@@ -61,7 +62,7 @@ namespace Centric.DNA.File
         public void Validate(int AbortLimit, RowValidationFunction rvf)
         {
 
-          StreamReader sr = new StreamReader(this.FilePath);
+          StreamReader sr = new StreamReader(this.FilePath, this.FileDefinition.Encoding);
 
           this.ValidationErrors.Add(new ValidationError(string.Format("File Name: {0}", this.FileName), ValidationErrorSeverity.Information));
           this.ValidationErrors.Add(new ValidationError(string.Format("File Hash: {0}", this.FileHash), ValidationErrorSeverity.Information));

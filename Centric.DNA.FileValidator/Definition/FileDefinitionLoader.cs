@@ -78,6 +78,10 @@ namespace Centric.DNA.File.Definition
           fd.TrimSpaces = bool.Parse(AttributeValue(FileNode, "strip-quotes", "true"));
           fd.SkipRows = int.Parse(AttributeValue(FileNode, "skip-rows", "0"));
 
+          // get the encoding text and lookup the encoding object
+          string EncodingText = AttributeValue(FileNode, "encoding", "ISO-8859-1");
+          fd.Encoding = System.Text.Encoding.GetEncoding(EncodingText);         
+
           if (!LoadOnlyFile)
           {
             foreach (XmlNode RowNode in FileNode.SelectNodes("row"))

@@ -10,7 +10,7 @@ using Centric.DNA.File.Definition;
 namespace Centric.DNA.File.Test
 {
     class Program
-    {
+    { 
         static void Main(string[] args)
         {
 
@@ -20,7 +20,6 @@ namespace Centric.DNA.File.Test
           f.FileDefinition = FileDefinitionLoader.LoadFromXmlFile(BasePath + @"\" + "rpm.xml");
 
           File.RowValidationFunction rvf = RowValidation;
-          string Branch = f.FolderBranch(@"C:\Temp");
        
           f.Validate(100, rvf);
 

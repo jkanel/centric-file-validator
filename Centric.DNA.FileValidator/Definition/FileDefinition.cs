@@ -19,7 +19,8 @@ namespace Centric.DNA.File
         public bool TrimSpaces = true;
         public bool StripQuotes = true;
         public bool CompressWhitespace = true;
-        
+        public System.Text.Encoding Encoding = System.Text.Encoding.GetEncoding("ISO-8859-1");
+       
         public List<RowDefinition> RowDefinitions = new List<RowDefinition>();
         
         public string[] ConvertRowToValues(string RowText)
